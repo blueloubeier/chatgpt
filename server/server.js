@@ -40,10 +40,10 @@ app.post('/', async (req, res) => {
 
 
       const connection = mysql.createConnection({
-        host: '154.17.10.6',
-        user: 'telegram',
-        password: 'Lbe87758258',
-        database: 'telegram'
+        host: process.env.host,
+        user: process.env.user,
+        password: process.env.password,
+        database: process.env.database
       });
 
       connection.connect();
