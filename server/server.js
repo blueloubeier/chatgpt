@@ -2,6 +2,7 @@ import express from 'express'
 import * as dotenv from 'dotenv'
 import cors from 'cors'
 import { Configuration, OpenAIApi } from 'openai'
+import mysql from 'mysql'
 
 dotenv.config()
 
@@ -38,6 +39,24 @@ app.post('/', async (req, res) => {
       });
 
 
+      const connection = mysql.createConnection({
+        host: '154.17.10.6',
+        user: 'telegram',
+        password: 'Lbe87758258',
+        database: 'telegram'
+      });
+
+      connection.connect();
+      
+      const newRecord = { question: prompt, answer: response["data"]["choices"][0]["message"]["content"] };
+
+      connection.query('INSERT INTO chatgpt_qa SET ?', newRecord, function (error, results, fields) {
+        if (error) throw error;
+        console.log('Record added!');
+      });
+      connection.end();
+
+      
 
 
 
