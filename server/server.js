@@ -6,7 +6,7 @@ import { Configuration, OpenAIApi } from 'openai'
 dotenv.config()
 
 const configuration = new Configuration({
-  apiKey: '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',
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -27,10 +27,7 @@ app.post('/', async (req, res) => {
   try {
     const prompt = req.body.prompt;
 
-    
-   
-
-
+  
     const chapGPT = async (prompt) => {
       const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -39,6 +36,10 @@ app.post('/', async (req, res) => {
       res.status(200).send({
         bot: response["data"]["choices"][0]["message"]["content"]
       });
+
+
+
+
 
       console.log(response["data"]["choices"][0]["message"]["content"]);
       };
